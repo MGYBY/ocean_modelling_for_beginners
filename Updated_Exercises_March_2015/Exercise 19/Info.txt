@@ -1,0 +1,12 @@
+
++++++ FORTRAN +++++
+
+This is a complete multi-layer hydrodynamic model with
+wind forcing, nonlinear terms, variable Coriolis force
+(beta-plane approximation), lateral momentum diffusion/
+friction and bottom friction. This model is applied with two
+layers. Interfacial friction is not included.
+
++++++ SciLab +++++
+
+See animation script.

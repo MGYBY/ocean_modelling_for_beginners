@@ -1,0 +1,39 @@
+
++++++ FORTRAN +++++
+
+As in Exercise 6, the FORTRAN code consists of three files:
+the main code, a declaration module and a module containing
+subroutines.  The declaration module lists all parameters
+and arrays accessed by the main program and the subroutines.
+
+The variables in this exercise are two-dimensional arrays
+with the first index i being the layer number and the second
+index k being the grid index.  Grid indices of 0 and nx+1
+mark the lateral boundaries of the model domain.  
+
+Output of all layer thicknesses goes into a single file.
+The output comes thus in blocks of 10 lines and 101 columns,
+whereby lines correspond to layer numbers and columns refer
+to grid cells in the horizontal.  Output of lateral
+velocities has the same structure.  In addition to this,
+there is an output of initial layer thicknesses to the file
+"h0.dat".  The file "header.txt" contains additional information, such
+as output time steps.  
+
+As before, I saved the main code with the file name
+"main.f95", the declaration module as "param.f95", and the
+module with the subroutines as "sub.f95".  
+
+The source code can be  compiled in the Command Prompt
+window with:
+
+g95 main.f95 param.f95 sub.f95
+
+At times, you have to do this twice. As before, I kept all
+files for Exercise 7 in a single folder including the SciLab
+animation script.  Double-clicking the latter opens SciLab
+in the right directory where it finds the relevant input files.
+
++++++ SciLab +++++
+
+See the animation script

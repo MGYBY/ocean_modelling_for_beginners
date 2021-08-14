@@ -1,0 +1,27 @@
+
++++++ FORTRAN +++++
+
+The main code "main.f95" contains the simulation loop,
+calls subroutines and produces the output. 
+
+I decided to produce outputs of sea-level elevation
+and horizontal speed at time intervals of 2 s.  
+
+Output of vertical speed calculated at a depth of 5 m below
+the sea surface is added for the creation of velocity stickplots.
+
+The switch MODE selects either the dam-break scenario or
+the wave-paddle forcing. 
+
++++++ SciLab +++++
+
+The SciLab animation script only displays the right half
+of the channel, given that the experimental design should
+trigger symmetric dynamics about the channel's centre.
+Nevertheless, before running this script, you should verify
+your results are symmetric as well. If not, this symmetry
+test has revealed programming errors in your code. 
+
+The SciLab script calls a "champ" drawing a two-dimensional
+vector field as arrows of length in proportion to the
+intensity of the field.     

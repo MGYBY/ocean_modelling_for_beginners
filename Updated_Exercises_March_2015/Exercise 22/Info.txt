@@ -1,0 +1,54 @@
+
++++++ FORTRAN +++++
+
+The model domain can be constructed in the FORTRAN simulation
+code as follows:
+
+! bathymetry
+DO k = 0,nx+1
+  DO j = 1,ny
+    hzero(j,k) = 300.0-200.0*REAL(j-1)/REAL(ny-1)
+  END DO
+  hzero(0,k) = hzero(1,k)
+  hzero(ny+1,k) = -10.0  ! closed boundary
+END DO
+
+DO k = 76-1,76+1
+  hzero(ny+1,k) = 100.0  ! forcing region
+END DO
+
+! undisturbed layer thicknesses & interface displacements
+DO k = 0,nx+1
+DO j = 0,ny+1
+  hzero(1,j,k) = MAX(htotal(j,k),0.)
+  hzero(2,j,k) = 0.0
+  eta(1,j,k) = MAX(0.0,-htotal(j,k))
+  eta(2,j,k) = 300.0-htotal(j,k)
+END DO
+END DO
+
+The model is forced via prescription of the plume thickness
+in the forcing region.  This needs to be implemented to the
+code just before calculation of dynamic pressure in the
+"dyn" subroutine.
+
+Do k = 76-1,76+1 
+  eta(2,ny+1,k) = eta0(2,ny+1,k)+100.0
+  h(2,ny+1,k) = 100.0
+  wet(2,ny+1,k) = 1 
+END DO
+
+The surface layer can be simply deactivated by adding the
+following loop after the velocity prediction. 
+
+DO j = 0,ny+1
+DO k = 0,nx+1
+  un(1,j,k)= 0.0
+  vn(1,j,k)= 0.0
+END DO
+END DO
+
++++++ SciLab +++++
+
+See animation script
+ 

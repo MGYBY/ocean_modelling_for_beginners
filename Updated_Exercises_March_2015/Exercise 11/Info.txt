@@ -1,0 +1,25 @@
+
++++++ FORTRAN +++++
+
+*********************************
+IMPORTANT INFORMATION
+
+This code requires the files "uF.dat", "vf.dat", and
+"h0.dat" from Exercise 10 as input data.
+*********************************
+
+A switch called ``mode'' selects a certain flux limiter
+scheme.  More details are given in the FORTRAN file.  
+
+Output of concentration distributions go into a file
+called "B.dat".
+
++++++ SciLab +++++
+
+In my script, the maximum value of the concentration
+field B is used for scaling of both contour range and
+contour interval.  This part of the script reads:  
+
+bmax = max(B);
+contour2d(x,y,B',[0:bmax/12:bmax],[1:13],"011","", [0,0,5,5], [4,6,4,6]);
+xset("fpf"," "); // remove contour labels

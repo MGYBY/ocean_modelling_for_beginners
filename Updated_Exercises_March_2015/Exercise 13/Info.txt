@@ -1,0 +1,33 @@
+
++++++ FORTRAN +++++
+
+Note: This code does not include prediction of Eulerian
+tracer fields.
+
+Since the advection equation is applied several times for
+different purposed in the simulation code, the advection
+scheme is implemented in the code in generalised form as a
+subroutine called "advect".  
+
+Input tor this subroutine are Courant numbers and an array
+"B", representing either u, v, or h.  The subroutine returns
+an array "BN" of the advective change of B per time step
+excluding the last term on the right-hand side of (5.21).
+This subroutine calls the "PSI" function that calculates
+coefficients with respect to the value of the "MODE"
+parameter chosen.
+
+The arrays B, BN, CuP, CuN, CvP, CvN, Cu and Cv and the
+parameter MODE need to be declared in the "param" module as
+global parameters.  
+
+
+The sea-level predictor requires special treatment.  
+The important differences here with respect to the treatment
+of the nonlinear terms are that 
+
+a) the Courant numbers are based on newly predicted
+velocity component, and 
+
+b) the last term on the right-hand side of (5.21) must not
+be included. 

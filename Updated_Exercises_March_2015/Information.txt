@@ -1,0 +1,6 @@
+Dear Users
+
+I have updated all SciLab scripts for compatibility with the latest version of SciLab (5.5.1).
+Enjoy the modelling journey!
+
+Jochen Kaempf, Adelaide, March 2015

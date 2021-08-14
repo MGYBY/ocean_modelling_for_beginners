@@ -1,0 +1,25 @@
+
++++++ FORTRAN +++++
+
+DATA OUTPUT
+
+Data outputs consist of time, location and vertical velocity.  
+
+SPECIFIC FORTRAN COMMAND USED
+
+The statement WRITE(10,'(4F12.4)') specifies an output format.  This output goes to unit 10, defined before, with four numbers
+each of 12 digits with 4 digits after the decimal point.  
+
+The command REAL() converts an integer into a real number.  You can do it the other way around with the INTEGER() statement. 
+
+The function MIN(a,b) takes the smallest of two real numbers, whereas MAX(a,b) takes the greater of the two numbers.  
+
+USE OF A FUNCTION
+
+The main program calls a function "density" defined after the main code as to calculate the density of the ambient ocean at the location of the object. 
+Functions commence with REAL FUNCTION name and finish with END FUNCTION name.  The function is called in the main program by a statement "c = density(a,b)",
+where values of the parameters a and b have been specified beforehand.  The function returns its calculation to the parameter c.  In this exercise,
+input parameters for this function are actual vertical location and stability frequency.  This function returns a real value and has two input parameters
+that, within the function, carry the names "zin" and "N2in".  These parameters are declared as local parameters with "REAL, INTENT(IN)::" statements.  
+Functions don't have access to parameters defined in the main program (unless using so-called modules, which will be explained later on).  
+This is the reason why we have to declare and specify the parameter g (acceleration due to gravity) again.

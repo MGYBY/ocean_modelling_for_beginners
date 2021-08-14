@@ -1,0 +1,31 @@
+
++++++ FORTRAN +++++
+
+The bathymetry file "topo.dat" must be supplied in local
+folder. Lateral momentum diffusion/lateral friction is not
+included in the codes.
+
+The folder "Case 1" contains the codes for the case of
+Rossby-wave disturbances travelling in the same direction
+as the ambient flow.
+
+Additional treatment is required to avoid problems at
+lateral boundaries.
+
+1) Strong bottom friction is used near the downstream
+   (eastern) boundary. This is only applied to velocity
+   fluctuations not the true velocity.
+
+2) Sea-level fluctuations are filtered away near the
+   upstream (western) boundary. 
+
+The folder "Case 2" contains the codes for the case of
+Rossby-wave disturbances travelling against the direction
+of the ambient flow.  To avoid problems at boundaries,
+sea-level anomalies are filtered away near the downstream
+(eastern) boundary.  Use of a zone of enhanced bottom
+friction is not required.
+
++++++ SciLab +++++
+
+See animation scripts. 

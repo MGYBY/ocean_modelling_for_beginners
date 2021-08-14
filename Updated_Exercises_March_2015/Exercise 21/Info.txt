@@ -1,0 +1,20 @@
+
++++++ FORTRAN +++++
+
+Wind-stress forcing, bottom and lateral friction, and the
+beta-plane approximation are disabled. Adjustment is not
+used in this exercise. Lagrangian float predictions are not
+included in the code.
+
+
++++++ SciLab +++++
+
+There are four different animation scripts. "SurfaceFlow.sce"
+and "BottomFlow.sce" produces animations of currents and
+tracer distributions in the surface and bottom layers,
+respectively. "Interface.sce" creates an animation of the
+evolution of interface displacements. "BenthicStorms.sce"
+reveals low-pressure centres in the bottom layer driving
+benthic storms. 
+
+ 

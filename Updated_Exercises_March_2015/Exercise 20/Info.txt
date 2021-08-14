@@ -1,0 +1,25 @@
+
++++++ FORTRAN +++++
+
+Wind-stress forcing, bottom and lateral friction, the
+nonlinear terms and the beta-plane approximation are disabled. 
+
+The density anomaly between the layers is gradually adjusted
+to its final value over the initial 2 days of the simulation.
+This is done in the main code within the iteration loop. 
+
+The simulation code includes prediction of Lagrangian
+tracers that are initially located in different regions
+defined by concentric circle segments.  A total of 400
+Lagrangian floats are added to each model layer. 
+Initilisation of these floats requires the random-number
+creator formulated in "random.f95".  Float predictions
+commence after 2 days of simulation.
+
+
++++++ SciLab +++++
+
+There are three animation scripts. "Doming.sce" produces an
+animation of the shape of the density interface.  The other
+scripts produce graphs of float trajectories and final flow
+field in the top and bottom layers, respectively. 

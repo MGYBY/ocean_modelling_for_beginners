@@ -1,0 +1,12 @@
+
++++++ FORTRAN +++++
+
+This code includes lateral momentum diffusion/lateral
+friction using the no-slip boundary condition. The code is
+set up for Scenario 3 (see text). The file "random.f95"
+contains the random-number creator.  This file needs to be
+compiled as well.
+
++++++ SciLab +++++
+
+See animation script. 

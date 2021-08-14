@@ -1,0 +1,12 @@
+
++++++ FORTRAN +++++
+
+Lateral momentum diffusion/lateral friction is not
+included in the code. The file "random.f95" contains the
+random-number creator.  This file needs to be compiled as
+well.
+
+
++++++ SciLab +++++
+
+See animation script. 

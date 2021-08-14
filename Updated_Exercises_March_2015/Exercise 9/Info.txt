@@ -1,0 +1,17 @@
+
++++++ FORTRAN +++++
+
+*********************************
+IMPORTANT INFORMATION
+
+Compile and run the bathymetry creator "BathCreator.f95"
+first to create the bathymetry. The simulation code requires
+the new file "topo.dat" as input.
+ 
++++++ SciLab +++++
+
+I decided to scale sea-level elevation and topography
+differently, such that both can be displayed in a single
+graph.  Note that flooding of the beach (implemented in the
+code) is not properly animated with the use of this
+scaling factor.  

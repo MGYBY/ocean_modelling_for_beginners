@@ -1,0 +1,150 @@
+
++++++ FORTRAN +++++
+
+1. Summary of changes required
+
+
+Only a few changes in the FORTRAN code for Exercise 5 are
+required to implement the flooding algorithm.  
+
+In the declaration module, the threshold layer thickness is
+declared with:
+
+REAL :: hmin  ! threshold value for dry/wet classification
+
+Several additions are required in the "init" subroutine.  
+Firstly, the parameter "hmin" is set to 10 cm:
+
+hmin = 0.1
+
+Following the initialisation of bathymetry in the array
+"hzero", sea-level elevations are calculated from:
+
+DO k = 0,nx+1
+  eta(k) = -MIN(0.0,hzero(k))
+  etan(k) = eta(k)
+END DO
+
+Initial values of true layer thickness "h" are then
+calculated from:
+
+DO k = 0,nx+1
+  h(k) = hzero(k)+eta(k)
+  wet(k) = 1
+  if(h(k) < hmin) wet(k) = 0 
+  u(k) = 0. 
+  un(k) = 0.
+END DO
+
+where also the new definition of wet and dry grid cells is
+implemented.  The velocity predictor in subroutine "dyn" has
+to be rewritten as:
+
+DO k = 1,nx
+! velocity predictor for wet grid cells
+  pgradx = -g*(eta(k+1)-eta(k))/dx
+  un(k) = 0.0 ! un remains zero if below conditions are not met
+  IF(wet(k)==1) THEN
+   IF((wet(k+1)==1).or.(pgradx>0)) un(k) = u(k)+dt*pgradx
+  ELSE 
+   IF((wet(k+1)==1).and.(pgradx<0)) un(k) = u(k)+dt*pgradx
+ END IF
+END DO
+
+There should be no flow across the closed lateral boundaries
+of the model domain, which requires additional statements
+directly after the velocity prediction loop:
+
+! boundary conditions
+un(0) = 0.0
+un(nx) = 0.0
+un(nx+1) = 0.0
+
+Boundary conditions for sea-level elevation are not required.  
+
+In the main program, true layer thicknesses and the dry/wet
+array need to be updated after each time step.  
+This is implemented after the call of the Shapiro filter
+with:
+
+DO k = 0,nx+1 
+ h(k) = hzero(k) + eta(k) 
+ wet(k) = 1 
+ if(h(k) < hmin) wet(k) = 0 
+ u(k) = un(k)
+END DO
+
+In addition to this, we should revise the data output.  
+For instance, it makes sense to have outputs of initial
+values of h and eta.  This can be done in the main program
+after the call of the "init'' subroutine with:  
+
+! output of initial eta distribution
+OPEN(10,file ='eta0.dat',form='formatted')
+  WRITE(10,'(101F12.6)')(eta(k),k=1,nx)
+CLOSE(10)
+! output of bathymetry
+OPEN(10,file ='h0.dat',form='formatted')
+  WRITE(10,'(101F12.6)')(hzero(k),k=1,nx)
+CLOSE(10)
+
+I tested the modified code with implementation of the
+flooding algorithm with the configuration of Exercise 5.
+Indeed, first versions of the code contained several errors,
+but error detection and elimination did not take too long.  
+Making errors is part of this business.   
+ 
+
+2. Implementation of scenarios
+
+Grid spacing and time step are the same as in the previous
+exercise.  The bathymetry for Scenario 1 is set up with the
+following statements placed in the "init" subroutine.  
+
+! bathymetry
+DO k = 1,51
+  hzero(k) = 10.-10.5*REAL(k)/51.
+END DO
+
+DO k = 52,nx 
+  hzero(k) = 10.-10.5*REAL(nx-k+1)/51.
+END DO
+
+The initial sea-level disturbance in Scenario 1 is implemented
+with:
+
+DO k = 1,20
+  eta(k) = 1.
+END DO
+
+Scenario 2 needs the following statements in the "init"
+subroutine:
+
+! bathymetry: the hillside comes first
+DO k = 1,nx 
+  hzero(k) = -20.0+10.0*REAL(k)/REAL(nx)
+END DO
+
+! bathymetry: the depression is added
+DO k = 51-5,51+5
+  hzero(k) = -14.0
+END DO
+
+hzero(0) = hzero(1) ! zero-gradient boundaries
+hzero(nx+1) = hzero(nx)
+
+The initial disturbance in sea-level elevation, prescribed
+in the main code of Scenario 2, is given by:
+
+DO k = 1,20
+ eta(k) = eta(k)+1.0
+END DO
+  
+In contrast to Scenario 1, here we have to add the
+disturbance to the background field, being nonzero for we
+are well above sea level.  I used eps = 0.05 for the Shapiro
+filter in both scenarios.     
+
++++++ SciLab +++++
+
+See animation script

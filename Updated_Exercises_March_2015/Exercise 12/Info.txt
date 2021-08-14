@@ -1,0 +1,26 @@
+
++++++ FORTRAN +++++
+
+******************************************************
+IMPORTANT INFORMATION
+
+This code requires the files "uF.dat", "vf.dat", and
+"h0.dat" from Exercise 10 as input data.
+*******************************************************
+
+The main program calls a random-number generator, being
+defined in a new module called ``random''.  The record
+length parameter "recl" in the OPEN statements is required
+to be able to create large files with many (3000 here)
+numbers in each line. 
+
+Tracer locations are based on the point-of-origin at
+the water depth (h) grid point at j = 1 and k = 1.
+Velocity in vicinity of a float is approximated by the
+velocity interpolated to the nearest h grid point. 
+
++++++ SciLab +++++
+
+In addition to output data from the FORTRAN program, the
+code requires the file "h0.dat" from Exercise 10.  
+Copy this into the local folder!

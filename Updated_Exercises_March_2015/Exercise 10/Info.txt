@@ -1,0 +1,116 @@
+
++++++ FORTRAN +++++
+
+*********************************
+IMPORTANT INFORMATION
+
+Compile and run the bathymetry creator "BathCreator.f95", 
+found in the folder "Miscellaneous/2DBathymetryCreator" on
+the CD-ROM, to create the bathymetry data. This produces the
+file "topo.dat" required for the simulation code.  
+Copy this file to the directory that contains the simulation
+code.
+
+
+It is also very important to gradually adjust the wind
+stress from zero to its final value over a reasonably long
+time of a few days.  Otherwise, an abrupt onset of winds
+would create large-amplitude dynamical disturbances
+(gravity waves) that might lead to a program crash making
+it difficult to create a steady-state circulation.  
+How this is implemented in the code is detailed below. 
+ 
+********************************
+
+The source code to Exercises 9 is used as a template.  
+Only changes are highlighted in the following.  
+
+Firstly, several new parameters associated with wind stress
+and bottom friction need to be added in the "param" module:
+
+REAL :: r, taux, tauy, rho
+
+These and other relevant parameters are initialised in the
+"init" subroutine with:
+
+! grid parameters
+dx = 100.0 ! lateral grid spacing (x-direction)
+dy = 100.0 ! lateral grid spacing (y-direction)
+dt = 3.0 ! numerical time step
+
+! physical parameters
+g = 9.81 ! acceleration due to gravity
+r = 1.e-3 !  bottom-drag coefficient
+rho = 1028.0 ! mean seawater density
+
+In addition to this, the previously created bathymetry data
+is loaded to the code with:
+
+!=============
+! read bathymetry file
+!=============
+OPEN(10,file ='topo.dat',form='formatted')
+DO j = 0,ny+1
+   READ(10,'(53F12.6)')(hzero(j,k),k=0,ny)
+END DO
+
+
+Gradual adjustment of the wind stress is done in the main
+code with:
+
+!------------------------
+! Simulation loop
+!------------------------
+Do n = 1,ntot
+
+time = REAL(n)*dt
+taux = 0.0 ! wind-stress in x-direction
+tauy = 0.2*MIN(time/(1.*24.*3600),1.0) ! wind-stress in y-direction 
+
+
+
+The "dyn" subroutines contains the formulation of the
+wind-stress force and the semi-implicit approach for bottom
+friction.  See the file "sub.f95" for more information.
+
+In the main program, I included a final output of the
+steady-state distributions of all variables after the end
+of the iteration loop.  These output files are required for
+Exercises 11 and 12.
+ 
+!==================
+! open files for final output 
+!==================
+OPEN(11,file ='etaF.dat',form='formatted') 
+OPEN(21,file ='hF.dat',form='formatted') 
+OPEN(31,file ='uF.dat',form='formatted') 
+OPEN(41,file ='vF.dat',form='formatted')
+
+DO j = 0,ny+1 
+  WRITE(11,'(53F12.6)')(eta(j,k),k=0,nx+1)
+  WRITE(21,'(53F12.6)')(h(j,k),k=0,nx+1)
+  WRITE(31,'(53F12.6)')(u(j,k),k=0,nx+1)
+  WRITE(41,'(53F12.6)')(v(j,k),k=0,nx+1)
+END DO
+
+WRITE(6,*)"Final data output written at time = ",time/(24.*3600.)
+
++++++ SciLab +++++
+
+The current speed is strongly modified by the water depth
+and currents will be much stronger in shallow water.
+In order to visualise the lake's circulation, it is
+therefore better to use water transport, that is,
+speed mulitplied with water depth, instead of flow velocity.
+See the animation script for calculation of water transport.
+Note that water transport carried units of m*m/s which can
+be translated as volume transport in cubic metres per second
+per unit width of the flow.
+
+ 
+Producing a vector field plot with all grid points (51 by 51)
+would lead to far too many and tiny arrows.  For the sake
+of visual clarity, it is much better to interpolate velocities
+onto a coarser grid.  In this exercise, I have chosen a grid
+of 25 by 25.  See the animation script for further
+instructions. 

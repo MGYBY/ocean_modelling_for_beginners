@@ -1,0 +1,10 @@
+
++++++ FORTRAN +++++
+
+This code includes semi-implicit treatment of the Coriolis
+force.  Sea-level forcing (wave paddle) is implemented in
+"main.f95".
+
++++++ SciLab +++++
+
+This script does not produce axis lables. 

@@ -1,0 +1,17 @@
+
++++++ FORTRAN +++++
+
+The FORTRAN simulation code is very similar to that of
+Exercise 6.  Apart from having two-dimensional horizontal
+arrays, nothing much has changed. 
+ 
+The main program calls all the subroutines.  It now contains
+output of data blocks of 51 by 51 elements in size.  
+The entire output of a variable, such as sea-level elevation,
+goes into a single file.  
+
++++++ SciLab +++++
+
+The script does neither include axis labels nor a title.  
+I am sure that you - the reader - are now experienced enough
+to alter the script according to your needs. 

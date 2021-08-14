@@ -1,0 +1,10 @@
+
++++++ FORTRAN +++++
+
+Bathymetry must be supplied  in a "topo.dat" file.
+
+The parameter SWITCH determines the type of lateral friction.
+This lateral momentum diffusion scheme assumes zero-gradient
+conditions for layer thicknesses h across a coastline to
+avoid a decrease in lateral friction owing to horizontal
+averaging of h. 
